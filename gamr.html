@@ -1,0 +1,402 @@
+!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting to 心晴小站</title>
+    <!-- 立即重定向到 心晴小站 -->
+    <meta http-equiv="refresh" content="0; url='心晴小站'">
+    <style>
+        body {
+            font-family: "Microsoft YaHei", sans-serif;
+            background: #fef5f8;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            padding: 2rem;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 3px 15px rgba(255, 90, 120, 0.1);
+            border-top: 4px solid #ff5a78;
+        }
+        h1 {
+            color: #ff5a78;
+            margin-bottom: 1rem;
+        }
+        p {
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        .link {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: #ff5a78;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+        .link:hover {
+            background: #ff4062;
+            transform: translateY(-2px);
+        }
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #ffd6e0;
+            border-top: 4px solid #ff5a78;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 2rem auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>正在跳轉到 心晴小站...</h1>
+        <div class="spinner"></div>
+        <p>您將被自動重定向到「心晴小站 - 校園情緒疏導好幫手」。</p>
+        <p>如果幾秒後沒有自動跳轉，請點擊下面的連結：</p>
+        <a href="心晴小站" class="link">前往 心晴小站</a>
+    </div>
+   
+    <script>
+        // JavaScript 備用重定向
+        setTimeout(function() {
+            window.location.href = "心晴小站";
+        }, 3000);
+       
+        // 顯示倒計時
+        let count = 3;
+        const countdownEl = document.createElement('p');
+        countdownEl.id = 'countdown';
+        countdownEl.style.marginTop = '1rem';
+        countdownEl.style.color = '#ff5a78';
+        countdownEl.style.fontWeight = 'bold';
+        document.querySelector('.container').appendChild(countdownEl);
+       
+        const timer = setInterval(function() {
+            countdownEl.textContent = `${count} 秒後自動跳轉...`;
+            count--;
+            if (count < 0) {
+                clearInterval(timer);
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>心晴小站 - 校園情緒疏導好幫手</title>
+    <style>
+        * {margin: 0; padding: 0; box-sizing: border-box; font-family: "Microsoft YaHei", sans-serif;}
+        body {background: #fef5f8; color: #333; line-height: 1.7;}
+        .music-box {position: fixed; bottom: 2rem; right: 2rem; z-index: 999; background: white; padding: 0.8rem; border-radius: 50px; box-shadow: 0 2px 10px rgba(255,90,120,0.3);}
+        .music-btn {border: none; background: #ff5a78; color: white; padding: 0.5rem 1rem; border-radius: 30px; cursor: pointer;}
+        .nav {background: #ff5a78; padding: 1rem 5%; color: white; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100;}
+        .nav a {color: white; text-decoration: none; padding: 0.5rem 1rem; background: #ff4062; border-radius: 4px; cursor: pointer;}
+        .page {display: none;}
+        .page.active {display: block;}
+        .hero {padding: 4rem 5%; text-align: center; background: linear-gradient(135deg, #ff7e98, #ff5a78); color: white;}
+        .hero h1 {font-size: 2.5rem; margin-bottom: 1rem;}
+        .hero p {font-size: 1.2rem; opacity: 0.9; max-width: 800px; margin: 0 auto;}
+        .features {padding: 4rem 5%; max-width: 1200px; margin: 0 auto;}
+        .features h2 {text-align: center; color: #ff5a78; margin-bottom: 3rem; font-size: 2rem;}
+        .card-wrap {display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;}
+        .card {background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 3px 10px rgba(0,0,0,0.05); border-top: 4px solid #ff5a78; text-align: center;}
+        .card h3 {color: #ff4062; margin-bottom: 1rem;}
+        .card p {color: #666; line-height: 1.6;}
+
+
+        /* 兩個按鈕並排 */
+        .button-group {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+        .enter-btn {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background: #ff5a78;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .enter-btn:hover {background: #ff4062; transform: translateY(-3px);}
+
+
+        .form-container {max-width: 700px; margin: 3rem auto; padding: 0 5%;}
+        .form-container h2 {color: #ff5a78; text-align: center; margin-bottom: 2rem;}
+        .mood-form {background: white; padding: 2.5rem; border-radius: 12px; box-shadow: 0 3px 15px rgba(0,0,0,0.05);}
+        .form-item {margin-bottom: 2rem;}
+        .form-item label {display: block; font-weight: 600; color: #ff5a78; margin-bottom: 0.8rem;}
+        .form-item select, .form-item input {width: 100%; padding: 1rem; border: 1px solid #ffd6e0; border-radius: 8px; font-size: 1rem; outline: none;}
+        .submit-btn {width: 100%; padding: 1.1rem; background: #ff5a78; color: white; border: none; border-radius: 8px; font-size: 1.1rem; cursor: pointer; transition: all 0.3s;}
+        .submit-btn:hover {background: #ff4062;}
+        .result-area {max-width: 700px; margin: 2rem auto; padding: 0 5%;}
+        .result-card {background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 3px 15px rgba(0,0,0,0.05); border-left: 4px solid #ff5a78;}
+        .result-card h3 {color: #ff5a78; margin-bottom: 1rem;}
+        .result-card .ai-msg {line-height: 1.8; margin-bottom: 1.5rem; color: #444;}
+        .result-card .tip-title {font-weight: 600; color: #ff5a78; margin-bottom: 0.5rem;}
+        .result-card .tip-content {color: #666; line-height: 1.6;}
+        .encourage-bar {
+            background: linear-gradient(90deg, #ffd6e0, #ffe0e6);
+            color: #ff5a78;
+            padding: 1rem 5%;
+            text-align: center;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            margin: 2rem auto;
+            max-width: 1200px;
+        }
+        .footer {padding: 2rem; text-align: center; color: #999; background: white; margin-top: 2rem;}
+        #ytplayer {width: 0; height: 0; opacity: 0; position: absolute; z-index: -1;}
+    </style>
+</head>
+<body>
+
+
+<div class="music-box">
+    <button class="music-btn" id="musicBtn" onclick="toggleMusic()">開啟背景音樂</button>
+</div>
+
+
+<iframe id="ytplayer" type="text/html"
+src="https://www.youtube.com/embed/eW09jkDM9_s?autoplay=1&mute=1&loop=1&playlist=eW09jkDM9_s"
+frameborder="0" allow="autoplay; muted"></iframe>
+
+
+<nav class="nav">
+    <h2 id="navTitle">心晴小站</h2>
+    <a id="navBtn" onclick="switchPage('homePage')">返回主頁</a >
+</nav>
+
+
+<!-- 主頁 -->
+<div class="page active" id="homePage">
+    <section class="hero">
+        <h1>校園情緒疏導好幫手</h1>
+        <p>匿名傾訴情緒煩惱，AI智能給建議，校園專屬紓壓方法，讓每個同學都有地方說心裡話。</p >
+    </section>
+    <section class="features">
+        <h2>三大核心功能</h2>
+        <div class="card-wrap">
+            <div class="card">
+                <h3>1. 匿名情緒填寫</h3>
+                <p>無需註冊，選擇煩惱類型並簡短填空，全程匿名保障隱私，大膽說出心聲。</p >
+            </div>
+            <div class="card">
+                <h3>2. AI智能疏導</h3>
+                <p>提交後AI即時分析，給出專屬、溫柔的共情建議，精准回應學業、人際等情緒痛點。</p >
+            </div>
+            <div class="card">
+                <h3>3. 校園紓壓錦囊</h3>
+                <p>內置深呼吸、課間放鬆等多種校園適用方法，無需依賴AI，隨時隨地緩解壓力。</p >
+            </div>
+        </div>
+    </section>
+
+
+    <!-- 兩個按鈕並排 -->
+    <section class="enter-area">
+        <div class="button-group">
+            <div class="enter-btn" onclick="switchPage('formPage')">開始我的情緒紓解</div>
+            <div class="enter-btn" onclick="switchPage('aiPage')">AI 智能輔導</div>
+        </div>
+    </section>
+
+
+    <div class="encourage-bar" id="encourageText"></div>
+    <footer class="footer">
+        <p>心晴小站 © 2025 | 校園情緒解憂MVP</p >
+    </footer>
+</div>
+
+
+<!-- 舊版：情緒填寫（不變） -->
+<div class="page" id="formPage">
+    <div class="form-container">
+        <h2>匿名填寫你的小情緒 ✍️</h2>
+        <form class="mood-form" id="moodForm">
+            <div class="form-item">
+                <label for="type">選擇煩惱類型</label>
+                <select id="type" required>
+                    <option value="">請選擇</option>
+                    <option value="study">學業壓力</option>
+                    <option value="social">人際矛盾</option>
+                    <option value="anxiety">自我焦慮</option>
+                    <option value="family">家庭煩惱</option>
+                    <option value="other">其他</option>
+                </select>
+            </div>
+            <div class="form-item">
+                <label for="content">簡述你的煩惱</label>
+                <input type="text" id="content" placeholder="例如：數學考試又唔合格，好失落..." required>
+            </div>
+            <button type="button" class="submit-btn" onclick="getAiResponse()">提交，獲取AI建議</button>
+        </form>
+    </div>
+</div>
+
+
+<!-- 新版：AI 智能輔導 -->
+<div class="page" id="aiPage">
+    <div class="form-container">
+        <h2>AI 智能輔導 💬</h2>
+        <div class="mood-form">
+            <div class="form-item">
+                <label>你想同AI講啲咩？</label>
+                <input type="text" id="aiInput" placeholder="自由輸入，AI會即時回應你…">
+            </div>
+            <button class="submit-btn" onclick="sendAiChat()">發送給AI</button>
+        </div>
+    </div>
+</div>
+
+
+<!-- 結果頁（共用） -->
+<div class="page" id="resultPage">
+    <div class="result-area">
+        <div class="result-card">
+            <h3>回覆 💬</h3>
+            <div class="ai-msg" id="aiMsg"></div>
+            <div class="tip-title" id="tipTitle" style="display:none;">校園紓壓小錦囊</div>
+            <div class="tip-content" id="tipContent"></div>
+        </div>
+        <div class="enter-area" style="margin-top:2rem;">
+            <div class="enter-btn" onclick="goBackToForm()">返回</div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+const encourageList = [
+    "你已經好努力啦，今日都要好好愛自己呀 💖",
+    "煩惱就像烏雲，遲早會散，你一定會見到陽光 🌤️",
+    "唔好太逼自己，慢啲都冇問題，你已經做得好好啦 ✨",
+    "每一日都係新嘅開始，今日嘅你都好值得被愛 🥰",
+    "你嘅存在本身就係意義，唔需要證明俾任何人睇 🌟"
+];
+
+
+window.onload = function(){
+    let r = Math.floor(Math.random() * encourageList.length);
+    document.getElementById("encourageText").innerText = encourageList[r];
+};
+
+
+let lastPage = "";
+
+
+// 舊版原有功能 —— 完全不變
+function getAiResponse() {
+    const type = document.getElementById('type').value;
+    const content = document.getElementById('content').value;
+    if (!type || !content) {
+        alert('請選擇類型並填寫內容哦～');
+        return;
+    }
+    let aiText = '', tipText = '';
+    switch(type) {
+        case 'study':
+            aiText = `我知道你因為「${content}」感到好煩惱。學業壓力確實好大，但一次嘅成績唔代表你嘅實力。`;
+            tipText = '課後深呼吸，拆細目標，慢慢進步。'; break;
+        case 'social':
+            aiText = `聽到你因為「${content}」唔開心，我明白呢種感覺好唔舒服。`;
+            tipText = '搵朋友傾計，出去走動，放鬆心情。'; break;
+        case 'anxiety':
+            aiText = `你因為「${content}」感到焦慮，其實你已經好努力。`;
+            tipText = '留時間俾自己，做鍾意嘅事，遠離負面情緒。'; break;
+        case 'family':
+            aiText = `家庭嘅矛盾真的好令人無助，你因為「${content}」唔開心，我完全明白。`;
+            tipText = '冷靜傾訴，互相體諒，照顧自己情緒。'; break;
+        case 'other':
+            aiText = `聽到你有呢個煩惱「${content}」，願意講出嚟已經好勇敢。`;
+            tipText = '食好嘢、聽歌、笑一笑，壞心情會過去。'; break;
+    }
+    document.getElementById('aiMsg').innerText = aiText;
+    document.getElementById('tipContent').innerText = tipText;
+    document.getElementById('tipTitle').style.display = 'block';
+    lastPage = 'formPage';
+    switchPage('resultPage');
+}
+
+
+// 新版 AI 智能輔導
+function sendAiChat() {
+    const text = document.getElementById('aiInput').value.trim();
+    if (!text) { alert('請輸入你想講嘅說話'); return; }
+    let reply = "";
+    if (text.includes('開心')) reply = "見到你開心我都開心呀 🥳";
+    else if (text.includes('唔開心') || text.includes('難過') || text.includes('喊')) reply = "我知你而家好唔舒服，辛苦你啦，我陪住你 💛";
+    else if (text.includes('考試') || text.includes('學業') || text.includes('溫書')) reply = "讀書真係唔容易，你已經好努力，盡力就夠啦 📚";
+    else if (text.includes('朋友') || text.includes('同學')) reply = "人際關係有時好煩，但做自己就夠靚啦 🫂";
+    else if (text.includes('屋企') || text.includes('家人')) reply = "家庭問題令人好無助，但你嘅感受永遠最重要 🏠";
+    else if (text.includes('累') || text.includes('攰')) reply = "你真係攰啦，俾啲時間休息下啦 😌";
+    else reply = "我收到你嘅心情啦，無論如何，你唔係一個人 🤍";
+    document.getElementById('aiMsg').innerText = reply;
+    document.getElementById('tipContent').innerText = "";
+    document.getElementById('tipTitle').style.display = 'none';
+    lastPage = 'aiPage';
+    switchPage('resultPage');
+}
+
+
+function goBackToForm() { switchPage(lastPage); }
+
+
+let isMuted = true;
+function toggleMusic() {
+    const p = document.getElementById('ytplayer');
+    if (isMuted) {
+        p.src = p.src.replace('mute=1','mute=0');
+        document.getElementById("musicBtn").innerText = "關閉背景音樂";
+    } else {
+        p.src = p.src.replace('mute=0','mute=1');
+        document.getElementById("musicBtn").innerText = "開啟背景音樂";
+    }
+    isMuted = !isMuted;
+}
+
+
+function switchPage(pageId) {
+    document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+    document.getElementById(pageId).classList.add('active');
+    let r = Math.floor(Math.random() * encourageList.length);
+    document.getElementById("encourageText").innerText = encourageList[r];
+    window.scrollTo({top:0, behavior:'smooth'});
+}
+</script>
+</body>
+</html>
+
+

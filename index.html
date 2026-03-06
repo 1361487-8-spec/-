@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting to 心晴小站</title>
+    <!-- 立即重定向到 心晴小站 -->
+    <meta http-equiv="refresh" content="0; url='心晴小站'">
+    <style>
+        body {
+            font-family: "Microsoft YaHei", sans-serif;
+            background: #fef5f8;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            padding: 2rem;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 3px 15px rgba(255, 90, 120, 0.1);
+            border-top: 4px solid #ff5a78;
+        }
+        h1 {
+            color: #ff5a78;
+            margin-bottom: 1rem;
+        }
+        p {
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        .link {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: #ff5a78;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+        .link:hover {
+            background: #ff4062;
+            transform: translateY(-2px);
+        }
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #ffd6e0;
+            border-top: 4px solid #ff5a78;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 2rem auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>正在跳轉到 心晴小站...</h1>
+        <div class="spinner"></div>
+        <p>您將被自動重定向到「心晴小站 - 校園情緒疏導好幫手」。</p>
+        <p>如果幾秒後沒有自動跳轉，請點擊下面的連結：</p>
+        <a href="心晴小站" class="link">前往 心晴小站</a>
+    </div>
+    
+    <script>
+        // JavaScript 備用重定向
+        setTimeout(function() {
+            window.location.href = "心晴小站";
+        }, 3000);
+        
+        // 顯示倒計時
+        let count = 3;
+        const countdownEl = document.createElement('p');
+        countdownEl.id = 'countdown';
+        countdownEl.style.marginTop = '1rem';
+        countdownEl.style.color = '#ff5a78';
+        countdownEl.style.fontWeight = 'bold';
+        document.querySelector('.container').appendChild(countdownEl);
+        
+        const timer = setInterval(function() {
+            countdownEl.textContent = `${count} 秒後自動跳轉...`;
+            count--;
+            if (count < 0) {
+                clearInterval(timer);
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
