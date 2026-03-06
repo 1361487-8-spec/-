@@ -3,100 +3,663 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirecting to 心晴小站</title>
-    <!-- 立即重定向到 心晴小站 -->
-    <meta http-equiv="refresh" content="0; url='心晴小站'">
+    <title>心晴小站 ✦ 校园情绪疏导</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", "苹方", "PingFang SC", sans-serif;
+        }
+
         body {
-            font-family: "Microsoft YaHei", sans-serif;
-            background: #fef5f8;
-            color: #333;
+            background: #fef9fb;
+            color: #2e2e2e;
+            line-height: 1.6;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
+        }
+
+        /* 固定音乐控件 — 更柔和 */
+        .music-box {
+            position: fixed;
+            bottom: 1.8rem;
+            right: 2rem;
+            z-index: 999;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(6px);
+            padding: 0.5rem 1.2rem 0.5rem 1.5rem;
+            border-radius: 60px;
+            box-shadow: 0 6px 18px rgba(255, 120, 140, 0.25);
+            border: 1px solid #ffe2e9;
+            display: flex;
             align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            padding: 2rem;
-            text-align: center;
+            gap: 0.5rem;
         }
-        .container {
-            max-width: 600px;
-            padding: 2rem;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 3px 15px rgba(255, 90, 120, 0.1);
-            border-top: 4px solid #ff5a78;
+
+        .music-icon {
+            font-size: 1.3rem;
+            filter: drop-shadow(0 2px 2px #ffb6c1);
         }
-        h1 {
+
+        .music-btn {
+            border: none;
+            background: #ff8da1;
+            color: white;
+            padding: 0.45rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            box-shadow: 0 2px 8px #ffb8c9;
+            transition: 0.2s;
+            letter-spacing: 0.5px;
+        }
+
+        .music-btn:hover {
+            background: #ff7088;
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px #ff9eb2;
+        }
+
+        /* 隐藏 YouTube iframe 但保留功能 */
+        #ytplayer {
+            width: 0;
+            height: 0;
+            opacity: 0;
+            position: absolute;
+            pointer-events: none;
+        }
+
+        /* 导航条 – 清爽 */
+        .nav {
+            background: #ffffffdd;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 0.8rem 6%;
             color: #ff5a78;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #ffe0e8;
+            box-shadow: 0 2px 10px rgba(255, 170, 180, 0.1);
+        }
+
+        .nav h2 {
+            font-size: 1.8rem;
+            font-weight: 350;
+            background: linear-gradient(145deg, #ff5a78, #ff8da1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 1px;
+        }
+
+        .nav a {
+            color: #ff5a78;
+            text-decoration: none;
+            padding: 0.5rem 1.3rem;
+            background: #fff0f3;
+            border-radius: 40px;
+            font-weight: 500;
+            border: 1px solid #ffd9e2;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+
+        .nav a:hover {
+            background: #ffe2ea;
+            border-color: #ffb0c0;
+        }
+
+        /* 页面切换 */
+        .page {
+            display: none;
+            animation: fade 0.25s ease;
+            flex: 1;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fade {
+            0% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+
+        /* Hero 区域 */
+        .hero {
+            padding: 4rem 6% 4.5rem;
+            text-align: center;
+            background: linear-gradient(125deg, #ffe6ec, #ffd9e4, #fff0f3);
+            color: #3a2a2f;
+            border-bottom-left-radius: 32px;
+            border-bottom-right-radius: 32px;
+            margin: 0 1% 1.5rem;
+            box-shadow: 0 6px 14px #ffdae3;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
             margin-bottom: 1rem;
+            font-weight: 450;
+            color: #a63b4f;
+            text-shadow: 2px 2px 0 #ffeef2;
         }
-        p {
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
+
+        .hero p {
+            font-size: 1.25rem;
+            max-width: 750px;
+            margin: 0 auto;
+            color: #4d3b41;
+            background: rgba(255,255,255,0.5);
+            padding: 0.8rem 1.8rem;
+            border-radius: 60px;
+            backdrop-filter: blur(2px);
         }
-        .link {
+
+        /* 核心功能卡片 */
+        .features {
+            padding: 2rem 6% 3rem;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .features h2 {
+            text-align: center;
+            color: #b3445c;
+            margin-bottom: 2.5rem;
+            font-size: 2.3rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        .card-wrap {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: #ffffffdd;
+            backdrop-filter: blur(4px);
+            padding: 2.3rem 1.5rem;
+            border-radius: 32px;
+            box-shadow: 0 12px 24px #ffd9e2;
+            border: 1px solid #ffe7ed;
+            text-align: center;
+            transition: 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            border-color: #ffb6c9;
+            box-shadow: 0 18px 28px #ffc1d2;
+        }
+
+        .card h3 {
+            color: #d64b69;
+            margin-bottom: 1.2rem;
+            font-size: 1.8rem;
+            font-weight: 380;
+        }
+
+        .card p {
+            color: #4b3f44;
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+
+        /* 双按钮区域 */
+        .button-group {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 2.5rem 0 1.5rem;
+        }
+
+        .enter-btn {
             display: inline-block;
-            padding: 1rem 2rem;
-            background: #ff5a78;
+            padding: 1.2rem 3.5rem;
+            background: #ff7a94;
             color: white;
             text-decoration: none;
-            border-radius: 50px;
+            border-radius: 60px;
+            font-size: 1.35rem;
+            font-weight: 450;
+            box-shadow: 0 8px 16px #ffb0c0;
+            transition: 0.2s;
+            border: none;
+            cursor: pointer;
+            border: 1px solid #ffb7c9;
+        }
+
+        .enter-btn:hover {
+            background: #ff5a78;
+            box-shadow: 0 12px 22px #ff8ca5;
+            transform: translateY(-3px);
+        }
+
+        /* 鼓励横幅 */
+        .encourage-bar {
+            background: #fff0f5f0;
+            backdrop-filter: blur(4px);
+            color: #c1435d;
+            padding: 1.2rem 5%;
+            text-align: center;
+            font-size: 1.2rem;
+            border-radius: 60px;
+            margin: 2.5rem auto 1.5rem;
+            max-width: 1000px;
+            box-shadow: 0 2px 10px #ffd0db;
+            font-weight: 460;
+            border: 1px solid #ffe0e8;
+        }
+
+        /* 表单卡片 (共用风格) */
+        .form-container {
+            max-width: 720px;
+            margin: 3rem auto;
+            padding: 0 5%;
+        }
+
+        .form-container h2 {
+            color: #bf4b63;
+            font-size: 2.2rem;
+            font-weight: 380;
+            text-align: center;
+            margin-bottom: 1.8rem;
+        }
+
+        .mood-form {
+            background: #ffffff;
+            padding: 2.5rem 2.8rem;
+            border-radius: 36px;
+            box-shadow: 0 20px 30px #ffcedb;
+            border: 1px solid #ffe4ec;
+        }
+
+        .form-item {
+            margin-bottom: 2rem;
+        }
+
+        .form-item label {
+            display: block;
+            font-weight: 500;
+            color: #c65773;
+            margin-bottom: 0.6rem;
             font-size: 1.1rem;
-            transition: all 0.3s;
-            margin-top: 1rem;
+            letter-spacing: 0.3px;
         }
-        .link:hover {
-            background: #ff4062;
-            transform: translateY(-2px);
+
+        .form-item select,
+        .form-item input {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            border: 1px solid #ffcbd9;
+            border-radius: 40px;
+            font-size: 1.05rem;
+            background: #fef8fa;
+            transition: 0.1s;
+            outline: none;
         }
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid #ffd6e0;
-            border-top: 4px solid #ff5a78;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 2rem auto;
+
+        .form-item select:focus,
+        .form-item input:focus {
+            border-color: #ff809b;
+            box-shadow: 0 0 0 3px #ffd9e6;
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1.1rem;
+            background: #ff7a94;
+            color: white;
+            border: none;
+            border-radius: 60px;
+            font-size: 1.25rem;
+            font-weight: 450;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 4px 12px #ffb0c2;
+        }
+
+        .submit-btn:hover {
+            background: #ff5a78;
+            transform: scale(1.01);
+        }
+
+        /* 结果卡片 */
+        .result-area {
+            max-width: 750px;
+            margin: 3rem auto;
+            padding: 0 5%;
+        }
+
+        .result-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 36px;
+            box-shadow: 0 24px 36px #ffd3df;
+            border-left: 6px solid #ff7894;
+        }
+
+        .result-card h3 {
+            color: #bc405b;
+            font-size: 2rem;
+            font-weight: 380;
+            margin-bottom: 1.2rem;
+        }
+
+        .ai-msg {
+            background: #fef2f6;
+            padding: 1.5rem 2rem;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            color: #2e2e2e;
+            margin-bottom: 1.8rem;
+            border: 1px solid #ffdae5;
+        }
+
+        .tip-title {
+            font-weight: 600;
+            color: #b34a63;
+            font-size: 1.3rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .tip-content {
+            color: #5a4a50;
+            font-size: 1.15rem;
+            background: #fff7f9;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+        }
+
+        /* 底部 */
+        .footer {
+            padding: 2rem;
+            text-align: center;
+            color: #9b7e88;
+            background: #ffffff;
+            margin-top: 3rem;
+            border-top: 1px solid #ffe1ea;
+            font-size: 1rem;
+        }
+
+        /* 返回上一页按钮 */
+        .enter-btn.small {
+            padding: 0.8rem 2.2rem;
+            font-size: 1.1rem;
+            background: #ffa5b8;
+            box-shadow: 0 4px 10px #ffc0cf;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>正在跳轉到 心晴小站...</h1>
-        <div class="spinner"></div>
-        <p>您將被自動重定向到「心晴小站 - 校園情緒疏導好幫手」。</p>
-        <p>如果幾秒後沒有自動跳轉，請點擊下面的連結：</p>
-        <a href="心晴小站" class="link">前往 心晴小站</a>
+
+    <!-- 固定音乐控件 - 优化显示与点击 -->
+    <div class="music-box">
+        <span class="music-icon">🎵</span>
+        <button class="music-btn" id="musicBtn" onclick="toggleMusic()">开启背景音乐</button>
     </div>
-    
+
+    <!-- YouTube 播放器 (静音自动播放，符合现代浏览器策略) -->
+    <iframe id="ytplayer" type="text/html"
+        src="https://www.youtube.com/embed/eW09jkDM9_s?autoplay=1&mute=1&loop=1&playlist=eW09jkDM9_s"
+        frameborder="0" allow="autoplay; encrypted-media"></iframe>
+
+    <!-- 导航栏 -->
+    <nav class="nav">
+        <h2>☁️ 心晴小站</h2>
+        <a id="navBtn" onclick="switchPage('homePage')">✦ 回主页</a>
+    </nav>
+
+    <!-- 主页 -->
+    <div class="page active" id="homePage">
+        <section class="hero">
+            <h1>🍃 校园情绪疏导好帮手</h1>
+            <p>匿名倾诉情绪烦恼 · AI智能建议 · 专属校园解压法</p>
+        </section>
+        
+        <section class="features">
+            <h2>陪你走过阴晴</h2>
+            <div class="card-wrap">
+                <div class="card">
+                    <h3>📝 1. 匿名倾诉</h3>
+                    <p>免注册，选择烦恼类型，写下心里话。你的隐私永远被保护。</p>
+                </div>
+                <div class="card">
+                    <h3>🤍 2. AI 共情</h3>
+                    <p>即时生成温暖回应，贴合学业、人际、家庭等情绪痛点。</p>
+                </div>
+                <div class="card">
+                    <h3>🎈 3. 校园锦囊</h3>
+                    <p>深呼吸、课间放松、正念小技巧，随时可用，缓解紧绷。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 两个按钮并排 (开始 & AI辅导) -->
+        <section class="enter-area" style="text-align:center;">
+            <div class="button-group">
+                <div class="enter-btn" onclick="switchPage('formPage')">🌱 开始倾诉</div>
+                <div class="enter-btn" onclick="switchPage('aiPage')">💬 AI 智能辅导</div>
+            </div>
+        </section>
+
+        <!-- 随机鼓励语 -->
+        <div class="encourage-bar" id="encourageText"></div>
+
+        <footer class="footer">
+            <p>心晴小站 © 2025 · 校园情绪解忧 | 匿名 · 温柔 · 陪伴</p>
+        </footer>
+    </div>
+
+    <!-- 旧版情绪填写 (保留完整逻辑) -->
+    <div class="page" id="formPage">
+        <div class="form-container">
+            <h2>🌧️ 匿名写下你的心情</h2>
+            <form class="mood-form" id="moodForm">
+                <div class="form-item">
+                    <label for="type">选择烦恼类型</label>
+                    <select id="type" required>
+                        <option value="">—— 请选择 ——</option>
+                        <option value="study">📚 学业压力</option>
+                        <option value="social">👥 人际矛盾</option>
+                        <option value="anxiety">😟 自我焦虑</option>
+                        <option value="family">🏡 家庭烦恼</option>
+                        <option value="other">🌈 其他</option>
+                    </select>
+                </div>
+                <div class="form-item">
+                    <label for="content">简述你的烦恼 (一两句就好)</label>
+                    <input type="text" id="content" placeholder="例：数学考试又不及格，很失落…" required>
+                </div>
+                <button type="button" class="submit-btn" onclick="getAiResponse()">提交，获取AI回应</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 新版AI智能辅导 (自由输入) -->
+    <div class="page" id="aiPage">
+        <div class="form-container">
+            <h2>🧠 和AI聊聊天</h2>
+            <div class="mood-form">
+                <div class="form-item">
+                    <label>你想对AI说什么？ (粤语/普通话都行)</label>
+                    <input type="text" id="aiInput" placeholder="例如：最近好大压力…">
+                </div>
+                <button class="submit-btn" onclick="sendAiChat()">发送给AI</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 共用结果页 -->
+    <div class="page" id="resultPage">
+        <div class="result-area">
+            <div class="result-card">
+                <h3>💌 回 应</h3>
+                <div class="ai-msg" id="aiMsg"></div>
+                <div class="tip-title" id="tipTitle" style="display:none;">📌 校园舒压小锦囊</div>
+                <div class="tip-content" id="tipContent"></div>
+            </div>
+            <div style="margin-top: 2.5rem; text-align: center;">
+                <div class="enter-btn small" onclick="goBackToForm()">⬅ 返回</div>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // JavaScript 備用重定向
-        setTimeout(function() {
-            window.location.href = "心晴小站";
-        }, 3000);
-        
-        // 顯示倒計時
-        let count = 3;
-        const countdownEl = document.createElement('p');
-        countdownEl.id = 'countdown';
-        countdownEl.style.marginTop = '1rem';
-        countdownEl.style.color = '#ff5a78';
-        countdownEl.style.fontWeight = 'bold';
-        document.querySelector('.container').appendChild(countdownEl);
-        
-        const timer = setInterval(function() {
-            countdownEl.textContent = `${count} 秒後自動跳轉...`;
-            count--;
-            if (count < 0) {
-                clearInterval(timer);
+        // ---------- 全局变量 ----------
+        let lastPage = "";                // 记录从哪个页面进入结果页
+        let isMuted = true;               // 音乐静音状态
+
+        // 暖心语句库 (可扩展)
+        const encourageList = [
+            "💖 你已经很努力啦，今天也要好好爱自己。",
+            "☁️ 烦恼就像乌云，迟早会散，你会见到阳光。",
+            "🌱 不用太逼自己，慢一点也没问题。",
+            "✨ 每一天都是新的开始，今日的你也值得被爱。",
+            "🌟 你的存在本身就是意义，不用向任何人证明。",
+            "🍀 累了就歇一歇，我在这里陪着你。",
+            "🫂 你已经做得很好了，真的。"
+        ];
+
+        // 页面加载时显示一句鼓励语
+        window.onload = function() {
+            pickRandomEncourage();
+            // 确保音乐按钮文字正确
+            document.getElementById("musicBtn").innerText = isMuted ? "开启背景音乐" : "关闭背景音乐";
+        };
+
+        // 随机显示鼓励语（同时更新主页与导航下方备用）
+        function pickRandomEncourage() {
+            let r = Math.floor(Math.random() * encourageList.length);
+            let bar = document.getElementById("encourageText");
+            if (bar) bar.innerText = encourageList[r];
+        }
+
+        // ---------- 页面切换 ----------
+        function switchPage(pageId) {
+            // 移除所有active
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            // 激活目标页
+            document.getElementById(pageId).classList.add('active');
+            // 更新鼓励语 (让页面有新鲜感)
+            pickRandomEncourage();
+            // 平滑滚动到顶部
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ---------- 旧版情绪填写 (完全保留原始逻辑，只优化文本显示) ----------
+        function getAiResponse() {
+            const type = document.getElementById('type').value;
+            const content = document.getElementById('content').value.trim();
+            if (!type || !content) {
+                alert('请选择烦恼类型并简单描述一下哦～');
+                return;
             }
-        }, 1000);
+            let aiText = '', tipText = '';
+            switch(type) {
+                case 'study':
+                    aiText = `📘 我知道你因为「${content}」感到烦恼。学业压力确实很大，但一次的得失不代表你的全部。`;
+                    tipText = '课间深呼吸，把目标拆小，每天进步一点点。';
+                    break;
+                case 'social':
+                    aiText = `🤝 听到你因为「${content}」不开心，这种感觉真的很难受。`;
+                    tipText = '适当抽离，做点喜欢的事，或找信任的人聊聊。';
+                    break;
+                case 'anxiety':
+                    aiText = `😶‍🌫️ 你因为「${content}」感到焦虑，但我想说你已经很努力了。`;
+                    tipText = '留时间给自己：听歌、散步、深呼吸，慢慢来。';
+                    break;
+                case 'family':
+                    aiText = `🏠 家庭的矛盾确实令人无力，你因为「${content}」感到难过，我完全明白。`;
+                    tipText = '试着温和表达自己，也照顾好自己的情绪。';
+                    break;
+                case 'other':
+                    aiText = `🌿 听到你有这个烦恼「${content}」，愿意说出来已经非常勇敢。`;
+                    tipText = '吃一点喜欢的食物，听听音乐，坏心情会过去的。';
+                    break;
+                default:
+                    aiText = `谢谢你的分享：「${content}」。我陪着你。`;
+                    tipText = '记得对自己温柔一些。';
+            }
+            document.getElementById('aiMsg').innerText = aiText;
+            document.getElementById('tipContent').innerText = tipText;
+            document.getElementById('tipTitle').style.display = 'block';
+            lastPage = 'formPage';
+            switchPage('resultPage');
+        }
+
+        // ---------- 新版AI智能辅导 (自由输入) ----------
+        function sendAiChat() {
+            const text = document.getElementById('aiInput').value.trim();
+            if (!text) {
+                alert('想说什么都可以，我在这里听～');
+                return;
+            }
+            let reply = "";
+            // 简单关键词回应（保持温暖、口语化）
+            if (text.includes('开心') || text.includes('好开心') || text.includes('哈哈哈')) {
+                reply = "🥳 看到你开心我也好开心！愿你一直有好心情。";
+            } else if (text.includes('唔开心') || text.includes('难过的') || text.includes('想喊') || text.includes('哭')) {
+                reply = "🫂 我知道你现在不好受，辛苦了。我陪你，慢慢来。";
+            } else if (text.includes('考试') || text.includes('学业') || text.includes('温书') || text.includes('成绩')) {
+                reply = "📚 读书真的不容易，但你已经很努力了。尽力就好，别太苛责自己。";
+            } else if (text.includes('朋友') || text.includes('同学') || text.includes('人際')) {
+                reply = "👐 人际关系有时很复杂，但做真实的你就足够好了。";
+            } else if (text.includes('屋企') || text.includes('家人') || text.includes('父母')) {
+                reply = "🏡 家庭问题常常让人无助，但你的感受永远最重要。";
+            } else if (text.includes('累') || text.includes('攰') || text.includes('疲倦')) {
+                reply = "😴 你真的累了，允许自己休息一会，没关系的。";
+            } else {
+                reply = "💬 我收到了你的心情。无论怎样，你都不是一个人。";
+            }
+            document.getElementById('aiMsg').innerText = reply;
+            document.getElementById('tipContent').innerText = "";   // 自由聊天不给锦囊
+            document.getElementById('tipTitle').style.display = 'none';
+            lastPage = 'aiPage';
+            switchPage('resultPage');
+        }
+
+        // 返回上一页 (表单/AI页)
+        function goBackToForm() {
+            if (lastPage) switchPage(lastPage);
+            else switchPage('homePage');   // 保底
+        }
+
+        // ---------- 背景音乐切换 (取消静音/静音) ----------
+        function toggleMusic() {
+            const player = document.getElementById('ytplayer');
+            // 修改 iframe src 来切换 mute 参数 (简单有效)
+            let src = player.src;
+            if (isMuted) {
+                // 将 mute=1 换成 mute=0
+                src = src.replace('mute=1', 'mute=0');
+                document.getElementById("musicBtn").innerText = "关闭背景音乐";
+            } else {
+                src = src.replace('mute=0', 'mute=1');
+                document.getElementById("musicBtn").innerText = "开启背景音乐";
+            }
+            player.src = src;   // 重新加载 (用户点击时才会实际有声)
+            isMuted = !isMuted;
+        }
+
+        // 额外：主页“返回”其实已经由 nav 完成，但保留函数
+        // (switchPage 已在全局)
+        window.switchPage = switchPage;
+        window.getAiResponse = getAiResponse;
+        window.sendAiChat = sendAiChat;
+        window.goBackToForm = goBackToForm;
+        window.toggleMusic = toggleMusic;
     </script>
 </body>
 </html>
